@@ -14,11 +14,11 @@ spec:
           service:
             name: web-service
             port:
-              number: 80
+              number: 3000
       - pathType: Prefix
         path: "/payment"
         backend:
           service:
             name: payment-service
             port:
-              number: 80
+              number: 3000
