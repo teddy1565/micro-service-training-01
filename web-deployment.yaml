@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  labels:
+    tier: backend
+    app: web-deployment
+    web: web-deployment
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: web-deployment
+  template:
+    metadata:
+      labels:
+        app: web-deployment
+    spec:
+      containers:
+      - name: web-backend
+        image: teddy1565/web-backend:v0.0.1
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "0.8"
+            memory: "1024Mi"
+      - name: web-cache
+        image: redis:6.0
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: "0.2"
+            memory: "256Mi"
+      restartPolicy: Always

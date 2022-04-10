@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: system-ingress
+  namespace: default
+spec:
+  rules:
+  - host: service.example.test
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: web-service
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/payment"
+        backend:
+          service:
+            name: payment-service
+            port:
+              number: 80

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-deployment
+  labels:
+    app: payment-deployment
+    tier: payment
+    payment: payment-deployment
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: payment-deployment
+  template:
+    metadata:
+      labels:
+        app: payment-deployment
+    spec:
+      containers:
+      - name: payment-backend
+        image: teddy1565/payment-backend:v0.0.1
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "0.8"
+            memory: "512Mi"
+      - name: payment-cache
+        image: redis:6.0
+        ports:
+        - containerPort: 6379
+        resources:
+          limits:
+            cpu: "0.2"
+            memory: "128Mi"
+      restartPolicy: Always
